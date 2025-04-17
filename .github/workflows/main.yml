@@ -1,9 +1,8 @@
 name: Sync to Hugging Face hub
+
 on:
   push:
     branches: [main]
-
-  # to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 jobs:
@@ -14,7 +13,12 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
-      - name: Push to hub
+
+      - name: Push to Hugging Face Hub
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: git push https://hardik47278:$HF_TOKEN@huggingface.co/spaces/hardik47278/Search_Engine_llms main
+        run: |
+          git config --global user.email "you@example.com"
+          git config --global user.name "Your Name"
+          git remote add hf https://hardik1247:${HF_TOKEN}@huggingface.co/spaces/hardik1247/Search_Engine_llms
+          git push hf main
