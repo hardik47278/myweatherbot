@@ -14,11 +14,26 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Push to Hugging Face Hub
+      - name: Push to Hugging Face Hub (with debug)
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
+          set -e  # stop the script on any error
+          set -x  # print each command as it runs
+
           git config --global user.email "you@example.com"
           git config --global user.name "Your Name"
+
           git remote add hf https://hardik1247:${HF_TOKEN}@huggingface.co/spaces/hardik1247/Search_Engine_llms
+
+          echo "📍 Verifying remotes and branches"
+          git remote -v
+          git branch
+
+          echo "📍 Showing recent commit"
+          git log -1
+
+          echo "🚀 Attempting to push to Hugging Face..."
           git push hf main
+
+
